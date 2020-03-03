@@ -495,6 +495,8 @@ NodeGroupInstancesDistribution:
       type: integer
     spotInstancePools:
       type: integer
+    spotAllocationStrategy:
+      type: string
   type: object
 NodeGroupSGs:
   additionalProperties: false

@@ -430,6 +430,20 @@ func validateInstancesDistribution(ng *NodeGroup) error {
 		return fmt.Errorf("spotInstancePools should be between 1 and 20")
 	}
 
+	if distribution.SpotInstancePools != nil && distribution.SpotAllocationStrategy != nil {
+		return fmt.Errorf("spotInstancePools cannot be specified when also specifying spotAllocationStrategy")
+	}
+
+	if distribution.SpotAllocationStrategy != nil {
+		spotAllocationStrategies := make(map[string]bool)
+		for _, spotAllocationStrategy := range SupportedSpotAllocationStrategies() {
+			spotAllocationStrategies[spotAllocationStrategy] = true
+		}
+		if _, ok := spotAllocationStrategies[*distribution.SpotAllocationStrategy]; !ok {
+			return fmt.Errorf("spotAllocationStrategy should be one of %v", SupportedSpotAllocationStrategies())
+		}
+	}
+
 	return nil
 }
 

@@ -469,6 +469,13 @@ var _ = Describe("ClusterConfig validation", func() {
 				err = validateInstancesDistribution(ng)
 				Expect(err).ToNot(HaveOccurred())
 			})
+
+			It("It fails when the spotAllocationStrategy is not a supported strategy", func() {
+				ng.InstancesDistribution.SpotAllocationStrategy = "random-unsupported-strategy"
+
+				err := validateInstancesDistribution(ng)
+				Expect(err).To(HaveOccurred())
+			})
 		})
 	})
 

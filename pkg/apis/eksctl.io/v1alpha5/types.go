@@ -178,6 +178,12 @@ const (
 	// ClusterDisableNAT defines the disabled NAT configuration option
 	ClusterDisableNAT = "Disable"
 
+	// SpotAllocationStrategyLowestPrice defines the ASG spot allocation strategy of lowest-price
+	SpotAllocationStrategyLowestPrice = "lowest-price"
+
+	// SpotAllocationStrategyCapacityOptimized defines the ASG spot allocation strategy of capacity-optimized
+	SpotAllocationStrategyCapacityOptimized = "capacity-optimized"
+
 	// eksResourceAccountStandard defines the AWS EKS account ID that provides node resources in default regions
 	// for standard AWS partition
 	eksResourceAccountStandard = "602401143452"
@@ -293,6 +299,14 @@ func SupportedNodeVolumeTypes() []string {
 		NodeVolumeTypeIO1,
 		NodeVolumeTypeSC1,
 		NodeVolumeTypeST1,
+	}
+}
+
+// SupportedSpotAllocationStrategies are the spot allocation strategies supported by ASG
+func SupportedSpotAllocationStrategies() []string {
+	return []string{
+		SpotAllocationStrategyLowestPrice,
+		SpotAllocationStrategyCapacityOptimized,
 	}
 }
 
@@ -737,6 +751,8 @@ type (
 		OnDemandPercentageAboveBaseCapacity *int `json:"onDemandPercentageAboveBaseCapacity,omitempty"`
 		//+optional
 		SpotInstancePools *int `json:"spotInstancePools,omitempty"`
+		//+optional
+		SpotAllocationStrategy *string `json:"spotAllocationStrategy,omitempty"`
 	}
 )
 
